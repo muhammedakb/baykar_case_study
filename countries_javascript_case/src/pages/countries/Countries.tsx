@@ -1,27 +1,29 @@
-import { Link, Outlet } from "react-router-dom";
+import Country from "../../components/Country";
+import Error from "../../components/Error";
+import Loading from "../../components/Loading";
 import useFetch from "../../hooks/useFetch";
-import { Country } from "../../types/country";
+import { ICountry } from "../../types/country";
+import "./countries.scss";
 
-type Props = {};
-
-const Countries = (props: Props) => {
-  const { data, error } = useFetch<Country[]>(
+const Countries = () => {
+  const { data, error } = useFetch<ICountry[]>(
     `${import.meta.env.VITE_BASE_URL}all`
   );
+  if (error) return <Error />;
+  if (!data) return <Loading />;
   return (
-    <div>
-      <nav>
-        <ul>
-          <li>ülkeler</li>
-          <li>ülkeler datatable</li>
-        </ul>
-      </nav>
-      <h1>Countries page</h1>
-      <Link to="/countries/turkey">Detay deneme</Link>
-      <br />
-      <Link to="/countries/with-datatable">Datatable deneme</Link>
-      <Outlet />
-    </div>
+    <main className="container">
+      <section className="container__items">
+        {data.map((country) => (
+          <Country
+            key={country.name.common}
+            image={country.flags.png}
+            name={country.name.common}
+            region={country.region}
+          />
+        ))}
+      </section>
+    </main>
   );
 };
 

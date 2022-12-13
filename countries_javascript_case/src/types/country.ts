@@ -198,7 +198,7 @@ interface CapitalInfo {
   latlng: number[];
 }
 
-export interface Country {
+export interface ICountry {
   name: Name;
   tld: string[];
   cca2: string;
