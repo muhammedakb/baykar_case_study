@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { memo, useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import Error from "../../components/Error";
 import Loading from "../../components/Loading";
@@ -69,4 +69,4 @@ const CountryDetail = () => {
   );
 };
 
-export default CountryDetail;
+export default memo(CountryDetail);
