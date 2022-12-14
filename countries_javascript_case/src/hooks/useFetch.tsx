@@ -12,7 +12,11 @@ type Action<T> =
   | { type: "fetched"; payload: T }
   | { type: "error"; payload: Error };
 
-function useFetch<T = unknown>(url: string, options?: RequestInit): State<T> {
+function useFetch<T = unknown>(
+  url: string,
+  delay?: number,
+  options?: RequestInit
+): State<T> {
   const cache = useRef<Cache<T>>({});
 
   const cancelRequest = useRef<boolean>(false);
@@ -66,10 +70,11 @@ function useFetch<T = unknown>(url: string, options?: RequestInit): State<T> {
       }
     };
 
-    void fetchData();
+    const timer = setTimeout(() => void fetchData(), delay ?? 0);
 
     return () => {
       cancelRequest.current = true;
+      clearTimeout(timer);
     };
   }, [url]);
 

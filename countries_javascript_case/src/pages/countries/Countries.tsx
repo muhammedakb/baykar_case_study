@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import Country from "../../components/Country";
 import Error from "../../components/Error";
 import Loading from "../../components/Loading";
@@ -7,9 +7,29 @@ import useFetch from "../../hooks/useFetch";
 import { ICountry } from "../../types/country";
 import "./countries.scss";
 
+const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
+
 const Countries = () => {
+  const [name, setName] = useState<string>("");
+  const [region, setRegion] = useState<string>("");
+
+  const apiEndpoint = useMemo((): string => {
+    let endpoint = "";
+    if (name.length > 0) {
+      endpoint = `${import.meta.env.VITE_BASE_URL}name/${name}`;
+    }
+    if (region.length > 0) {
+      endpoint = `${import.meta.env.VITE_BASE_URL}region/${region}`;
+    }
+    if (name.length < 1 && region.length < 1) {
+      endpoint = `${import.meta.env.VITE_BASE_URL}all`;
+    }
+    return endpoint;
+  }, [name, region]);
+
   const { data, error } = useFetch<ICountry[]>(
-    `${import.meta.env.VITE_BASE_URL}all`
+    apiEndpoint,
+    name.length > 0 ? 1000 : 0
   );
 
   const totalPages = useMemo(
@@ -28,6 +48,26 @@ const Countries = () => {
   if (!data) return <Loading />;
   return (
     <main className="container">
+      <header className="container__header">
+        <input
+          type="search"
+          placeholder="Enter country name"
+          onChange={(e) => setName(e.target.value)}
+          value={name}
+        />
+        <select
+          className="container__header__select"
+          value={region}
+          onChange={(e) => setRegion(e.target.value)}
+        >
+          <option value="">Choose region</option>
+          {regions.map((reg) => (
+            <option value={reg} key={reg}>
+              {reg}
+            </option>
+          ))}
+        </select>
+      </header>
       <section className="container__items">
         {slicedData?.map((country) => (
           <Country
