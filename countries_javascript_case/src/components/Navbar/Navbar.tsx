@@ -1,10 +1,7 @@
-import { NavLink, useLocation, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import "./navbar.scss";
 
 const Navbar = () => {
-  const location = useLocation();
-
-  console.log(location);
   return (
     <div className="main">
       <nav className="main__nav">

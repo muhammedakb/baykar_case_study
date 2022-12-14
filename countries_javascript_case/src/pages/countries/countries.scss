@@ -9,4 +9,8 @@
     justify-content: center;
     gap: 2rem;
   }
+  &__footer {
+    position: fixed;
+    bottom: 0;
+  }
 }

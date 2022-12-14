@@ -1,0 +1,22 @@
+.pagination {
+  width: 500px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background-color: #424242;
+  &__btn {
+    width: 100px;
+    height: 20px;
+    background: transparent;
+    text-decoration: underline;
+    color: #fff;
+    cursor: pointer;
+    font-size: 15px;
+    &:disabled {
+      text-decoration: none;
+      color: #6e6d6d;
+      cursor: not-allowed;
+    }
+  }
+}
