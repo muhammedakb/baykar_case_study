@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useCallback } from "react";
+import { Dispatch, memo, SetStateAction, useCallback } from "react";
 import "./pagination.scss";
 
 type Props = {
@@ -18,7 +18,7 @@ const Pagination = ({ setPage, totalPages, page }: Props) => {
     setPage((prevState: number) => (prevState > 0 ? prevState - 1 : prevState));
   }, []);
   return (
-    <footer className="pagination">
+    <section className="pagination">
       <button
         onClick={onPrevPage}
         disabled={page <= 0}
@@ -28,7 +28,9 @@ const Pagination = ({ setPage, totalPages, page }: Props) => {
       </button>
       <select value={page} onChange={(e) => setPage(Number(e.target.value))}>
         {[...Array(totalPages)].map((_, index) => (
-          <option value={index}>{index}</option>
+          <option key={index} value={index}>
+            {index}
+          </option>
         ))}
       </select>
       <button
@@ -38,8 +40,8 @@ const Pagination = ({ setPage, totalPages, page }: Props) => {
       >
         Next page
       </button>
-    </footer>
+    </section>
   );
 };
 
-export default Pagination;
+export default memo(Pagination);
