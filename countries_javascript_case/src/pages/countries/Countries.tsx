@@ -3,6 +3,7 @@ import Country from "../../components/Country";
 import Error from "../../components/Error";
 import Loading from "../../components/Loading";
 import Pagination from "../../components/Pagination";
+import TextField from "../../components/TextField";
 import useFetch from "../../hooks/useFetch";
 import { ICountry } from "../../types/country";
 import "./countries.scss";
@@ -49,11 +50,11 @@ const Countries = () => {
   return (
     <main className="container">
       <header className="container__header">
-        <input
+        <TextField
+          value={name}
+          setValue={setName}
           type="search"
           placeholder="Enter country name"
-          onChange={(e) => setName(e.target.value)}
-          value={name}
         />
         <select
           className="container__header__select"
